@@ -10,28 +10,30 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageTk
 from Xlib import display
 
-# Get user enviro
-# def check_os():
-#   if platform.system() == 'Windows':
-#       return 'Windows'
-#   elif platform.system() == 'Linux':
-#       return 'Linux'
-#   elif platform.system() == 'Darwin':
-#       return 'Mac'
-#   else:
-#       return 'Unknown OS'
-
-# check_os()== 'Windows' --> Get screen dimensions for "..."
+# os == 'Windows' --> Get screen dimensions for "..."
 if platform.system() == 'Windows':
     user32 = ctypes.windll.user32
     screen_width = user32.GetSystemMetrics(0)
     screen_height = user32.GetSystemMetrics(1)
 
-# check_os()== 'Linux' --> Get screen dimensions for "..."
+# os == 'Linux' --> Get screen dimensions for "..."
 if platform.system() == 'Linux':
     screen = display.Display().screen()
     screen_width = screen.width_in_pixels
     screen_height = screen.height_in_pixels
+
+# os == 'Darwin' ...Mac... --> make tk/grab screen dimensions for "..."
+if platform.system() == 'Darwin':
+  def get_screen_size():  
+    root = tk.Tk()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    root.destroy()
+    return screen_width, screen_height
+  get_screen_size()  
+  screen_width, screen_height = get_screen_size()
+  print(screen_width, screen_height)
+  
 # URL of APOD website
 url = 'https://apod.nasa.gov/apod/astropix.html'
 
