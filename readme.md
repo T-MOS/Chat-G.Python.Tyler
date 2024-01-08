@@ -20,7 +20,7 @@ You can install these dependencies using pip:
 
 ```bash
 pip install ctypes os platform tkinter io requests bs4 pillow python-xlib
-
+```
 ## How It Works
 
 1. The program first checks the operating system and gets the screen dimensions.
@@ -42,4 +42,3 @@ python apod.py
 ```
 
 Enjoy your new APOD desktop background!
-```
