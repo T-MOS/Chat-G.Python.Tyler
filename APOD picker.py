@@ -8,18 +8,7 @@ from tkinter import messagebox, scrolledtext
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageTk
-from Xlib import display
-
-# Get user enviro
-# def check_os():
-#   if platform.system() == 'Windows':
-#       return 'Windows'
-#   elif platform.system() == 'Linux':
-#       return 'Linux'
-#   elif platform.system() == 'Darwin':
-#       return 'Mac'
-#   else:
-#       return 'Unknown OS'
+# from Xlib import display
 
 # check_os()== 'Windows' --> Get screen dimensions for "..."
 if platform.system() == 'Windows':
@@ -28,10 +17,10 @@ if platform.system() == 'Windows':
     screen_height = user32.GetSystemMetrics(1)
 
 # check_os()== 'Linux' --> Get screen dimensions for "..."
-if platform.system() == 'Linux':
-    screen = display.Display().screen()
-    screen_width = screen.width_in_pixels
-    screen_height = screen.height_in_pixels
+# if platform.system() == 'Linux':
+#     screen = display.Display().screen()
+#     screen_width = screen.width_in_pixels
+#     screen_height = screen.height_in_pixels
 
 if platform.system() == 'Darwin':
   def get_screen_size():  
