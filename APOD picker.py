@@ -10,19 +10,29 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageTk
 from Xlib import display
 
-# os == 'Windows' --> Get screen dimensions for "..."
+# Get user enviro
+# def check_os():
+#   if platform.system() == 'Windows':
+#       return 'Windows'
+#   elif platform.system() == 'Linux':
+#       return 'Linux'
+#   elif platform.system() == 'Darwin':
+#       return 'Mac'
+#   else:
+#       return 'Unknown OS'
+
+# check_os()== 'Windows' --> Get screen dimensions for "..."
 if platform.system() == 'Windows':
     user32 = ctypes.windll.user32
     screen_width = user32.GetSystemMetrics(0)
     screen_height = user32.GetSystemMetrics(1)
 
-# os == 'Linux' --> Get screen dimensions for "..."
+# check_os()== 'Linux' --> Get screen dimensions for "..."
 if platform.system() == 'Linux':
     screen = display.Display().screen()
     screen_width = screen.width_in_pixels
     screen_height = screen.height_in_pixels
 
-# os == 'Darwin' ...Mac... --> make tk/grab screen dimensions for "..."
 if platform.system() == 'Darwin':
   def get_screen_size():  
     root = tk.Tk()
@@ -30,8 +40,11 @@ if platform.system() == 'Darwin':
     screen_height = root.winfo_screenheight()
     root.destroy()
     return screen_width, screen_height
-  get_screen_size()  
+  
+  get_screen_size()
+  
   screen_width, screen_height = get_screen_size()
+  
   print(screen_width, screen_height)
   
 # URL of APOD website
@@ -80,7 +93,7 @@ root.title('APOD Image Preview')
 
 # Set the width of the scrolledtext widget to screen width
 scroll_text = scrolledtext.ScrolledText(root,
-                                        width=screen_width // 10,
+*width=screen_width // 10,
                                         height=10,
                                         wrap=tk.WORD)
 scroll_text.pack(fill=tk.BOTH, expand=True)
@@ -103,9 +116,16 @@ if response == 'yes':
   image.save(image_path)
 
   # Set the image as desktop background
-  SPI_SETDESKWALLPAPER = 0x0014
-  ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0,
-                                             image_path, 3)
+  #linux
+  if platform.system() == 'Linux':
+    setterCommand = 'gsettings set org.gnome.desktop.background picture-uri file://' + \
+    image_path
+    os.system(setterCommand)
+  #windows
+  if platform.system() == 'Windows':
+    SPI_SETDESKWALLPAPER = 0x0014
+    ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0,
+                                               image_path, 3)
 
   messagebox.showinfo('Set Background Successful',
                       'Desktop background has been set.')
