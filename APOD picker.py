@@ -93,7 +93,7 @@ root.title('APOD Image Preview')
 
 # Set the width of the scrolledtext widget to screen width
 scroll_text = scrolledtext.ScrolledText(root,
-*width=screen_width // 10,
+width = screen_width // 10,
                                         height=10,
                                         wrap=tk.WORD)
 scroll_text.pack(fill=tk.BOTH, expand=True)
