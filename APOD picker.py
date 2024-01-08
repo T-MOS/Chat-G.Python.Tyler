@@ -10,26 +10,25 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageTk
 from Xlib import display
 
-
 # Get user enviro
-def check_os():
-  if platform.system() == 'Windows':
-      return 'Windows'
-  elif platform.system() == 'Linux':
-      return 'Linux'
-  elif platform.system() == 'Darwin':
-      return 'Mac'
-  else:
-      return 'Unknown OS'
+# def check_os():
+#   if platform.system() == 'Windows':
+#       return 'Windows'
+#   elif platform.system() == 'Linux':
+#       return 'Linux'
+#   elif platform.system() == 'Darwin':
+#       return 'Mac'
+#   else:
+#       return 'Unknown OS'
 
 # check_os()== 'Windows' --> Get screen dimensions for "..."
-if check_os() == 'Windows':
+if platform.system() == 'Windows':
     user32 = ctypes.windll.user32
     screen_width = user32.GetSystemMetrics(0)
     screen_height = user32.GetSystemMetrics(1)
 
 # check_os()== 'Linux' --> Get screen dimensions for "..."
-if check_os() == 'Linux':
+if platform.system() == 'Linux':
     screen = display.Display().screen()
     screen_width = screen.width_in_pixels
     screen_height = screen.height_in_pixels
