@@ -1,5 +1,5 @@
 import os
-import tkinter as tk
+# import tkinter as tk
 
 import numpy as np
 from PIL import Image, ImageTk
@@ -24,7 +24,7 @@ def least_edge(E):
   
 # open/scale/display
 
-image = Image.open("enceladusstripes_cassini_forBG.jpg")
+image = Image.open("ascii/enceladusstripes_cassini_forBG.jpg")
 sclae_factor = float((display.Display().screen().width_in_pixels/image.size[0]))
 
 def scale_me(image, scale_factor):
