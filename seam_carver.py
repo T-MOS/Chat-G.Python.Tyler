@@ -34,7 +34,7 @@ def scale_me(image, scale_factor):
   new_image.show()
     return new_image
 
-
+scale_me(image, scale_factor)
 
 # root = tk.Tk()
 # root.title('Image Manip. Practice')
