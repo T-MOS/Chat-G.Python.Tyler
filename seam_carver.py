@@ -25,7 +25,7 @@ def least_edge(E):
 # open/scale/display
 
 image = Image.open("ascii/enceladusstripes_cassini_forBG.jpg")
-sclae_factor = float((display.Display().screen().width_in_pixels/image.size[0]))
+scale_factor = float((display.Display().screen().width_in_pixels/image.size[0]))
 
 def scale_me(image, scale_factor):
   width, height = image.size
