@@ -31,18 +31,19 @@ def scale_me(image, scale_factor):
   width, height = image.size
   new_width = int(width * scale_factor)
   new_image = image.resize((new_width, int(height * scale_factor)))
-  return new_image
+  new_image.show()
+    return new_image
 
 
 
-root = tk.Tk()
-root.title('Image Manip. Practice')
+# root = tk.Tk()
+# root.title('Image Manip. Practice')
 
-# Create a label and display the image
-image_label = tk.Label(root)
-image_label.pack()
-photo = ImageTk.PhotoImage(image)
-image_label.configure(image=photo)
+# # Create a label and display the image
+# image_label = tk.Label(root)
+# image_label.pack()
+# photo = ImageTk.PhotoImage(image)
+# image_label.configure(image=photo)
 
 root.mainloop()
       
