@@ -1,7 +1,9 @@
 import os
+import tkinter as tk
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageTk
+from Xlib import display
 
 
 def least_edge(E):
@@ -20,5 +22,27 @@ def least_edge(E):
     return least_E, dirs
   
   
+# open/scale/display
 
+image = Image.open("enceladusstripes_cassini_forBG.jpg")
+sclae_factor = float((display.Display().screen().width_in_pixels/image.size[0]))
+
+def scale_me(image, scale_factor):
+  width, height = image.size
+  new_width = int(width * scale_factor)
+  new_image = image.resize((new_width, int(height * scale_factor)))
+  return new_image
+
+
+
+root = tk.Tk()
+root.title('Image Manip. Practice')
+
+# Create a label and display the image
+image_label = tk.Label(root)
+image_label.pack()
+photo = ImageTk.PhotoImage(image)
+image_label.configure(image=photo)
+
+root.mainloop()
       
