@@ -26,6 +26,9 @@ cv.imshow("display img", resized)
 
 laplacian = cv.Laplacian(resized, cv.CV_64F)
 
+#might try next
+# scharr =
+
 sobelx = cv.Sobel(resized,cv.CV_64F, 1, 0, ksize=5)
 abs_sobelx = np.abs(sobelx)
 
