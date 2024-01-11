@@ -13,7 +13,7 @@ img = cv.imread('2401.jpg', cv.IMREAD_GRAYSCALE)
 (h, w) = img.shape
 assert img is not None, "file could not be read, check with os.path.exitsts()"
 
-
+#scale w/ aspect
 scale_factor = (550 / w)
 scaled = (550, int(h * scale_factor))
 resized = cv.resize(img, scaled)
