@@ -32,14 +32,13 @@ abs_sobelx = np.abs(sobelx)
 sobely = cv.Sobel(resized,cv.CV_64F, 0, 1, ksize=5)
 abs_sobely = np.abs(sobely)
 
-sobel8ux = np.uint8(abs_sobelx)
-sobel8uy = np.uint8(abs_sobely)
+
+# dtype output of uint8 (CV_8U) of |64F| is garbage
+# sobel8ux = np.uint8(abs_sobelx)
+# sobel8uy = np.uint8(abs_sobely)
 
 plt.subplot(1,3,1),plt.imshow(resized,cmap = 'gray')
 plt.title('Original, scaled.'), plt.xticks([]), plt.yticks([])
-# plt.subplot(2,2,2),plt.imshow(laplacian,cmap = 'gray')
-# plt.title('Laplacian 2nd Derivative'), plt.xticks([]), plt.yticks([])
-
 plt.subplot(1,3,2),plt.imshow(abs_sobelx,cmap = 'gray')
 plt.title('Sobel X-axis'), plt.xticks([]), plt.yticks([])
 plt.subplot(1,3,3),plt.imshow(abs_sobely,cmap = 'gray')
