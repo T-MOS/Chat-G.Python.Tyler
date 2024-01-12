@@ -25,6 +25,7 @@ if response.status_code == 200:
     # Request the image
     image_response = requests.get(img_url)
     if image_response.status_code == 200:
+        # image_buffer = BytesIO()
         image_array = np.frombuffer(image_response.content, np.uint8)
         image = cv.imdecode(image_array, cv.IMREAD_COLOR)
         img = cv.imdecode(image_array, cv.IMREAD_GRAYSCALE)
@@ -39,6 +40,7 @@ resized = cv.resize(image, scaled)
 for_kernels = cv.resize(img,scaled)
 
 
+
 if img is None:
     sys.exit("Could not read the image")
 
@@ -50,18 +52,42 @@ def show_colored_array(array):
     return np.arrray([to_rgb(val) for val in array]) / np.max(np.abs(array))
 
 
-sobelx = cv.Sobel(for_kernels,cv.CV_64F, 1, 0, ksize=5)
+# sobelx = cv.Sobel(for_kernels,cv.CV_64F, 1, 0, ksize=5)
+# abs_sobelx = np.abs(sobelx)
+# sobely = cv.Sobel(for_kernels,cv.CV_64F, 0, 1, ksize=5)
+# abs_sobely = np.abs(sobely)
+# edgy = np.sqrt((sobelx**2 + sobely**2))
+# # print(f"sqrt sqrds: {np.sqrt((sobelx**2 + sobely**2))!r}")
+
+#fullsize IMAGE pass/draw
+sobelx = cv.Sobel(img,cv.CV_64F, 1, 0, ksize=5)
 abs_sobelx = np.abs(sobelx)
-sobely = cv.Sobel(for_kernels,cv.CV_64F, 0, 1, ksize=5)
+sobely = cv.Sobel(img,cv.CV_64F, 0, 1, ksize=5)
 abs_sobely = np.abs(sobely)
+edgy = np.sqrt((sobelx**2 + sobely**2))
+plt.subplot(2,2,1),plt.imshow(image,cmap = 'gray')
+plt.title('Original, scaled.'), plt.xticks([]), plt.yticks([])
+plt.subplot(2,2,2),plt.imshow(edgy,cmap = 'gray')
+plt.title('Combined Sobels'), plt.xticks([]), plt.yticks([])
+plt.subplot(2,2,3),plt.imshow(abs_sobelx,cmap = 'gray')
+plt.title('Sobel X-axis'), plt.xticks([]), plt.yticks([])
+plt.subplot(2,2,4),plt.imshow(abs_sobely,cmap = 'gray')
+plt.title('Sobel Y-axis'), plt.xticks([]), plt.yticks([])
+plt.show()
 
-# print(f"sqrt sqrds: {np.sqrt((sobelx**2 + sobely**2))!r}")
 
-# plt.subplot(1,3,1),plt.imshow(resized,cmap = 'gray')
+# Save the gradient magnitude image
+# cv.imwrite("gradient_magnitudes.png", np.uint8(edgy))
+
+# plt.subplot(2,2,1),plt.imshow(resized,cmap = 'gray')
 # plt.title('Original, scaled.'), plt.xticks([]), plt.yticks([])
-# plt.subplot(1,3,2),plt.imshow(abs_sobelx,cmap = 'gray')
+# plt.subplot(2,2,2),plt.imshow(edgy,cmap = 'gray')
+# plt.title('Combined Sobels'), plt.xticks([]), plt.yticks([])
+# plt.subplot(2,2,3),plt.imshow(abs_sobelx,cmap = 'gray')
 # plt.title('Sobel X-axis'), plt.xticks([]), plt.yticks([])
-# plt.subplot(1,3,3),plt.imshow(abs_sobely,cmap = 'gray')
+# plt.subplot(2,2,4),plt.imshow(abs_sobely,cmap = 'gray')
 # plt.title('Sobel Y-axis'), plt.xticks([]), plt.yticks([])
 # plt.show()
 # cv.imshow("display image", resized)
+
+
