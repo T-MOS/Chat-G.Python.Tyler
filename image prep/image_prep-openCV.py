@@ -44,6 +44,21 @@ for_kernels = cv.resize(img,scaled)
 if img is None:
     sys.exit("Could not read the image")
 
+def least_edge(E):
+    least_E = np.zeros(E.shape)
+    dirs = np.zeros(E.shape, dtype=int)
+    least_E[-1, :] = E[-1, :]
+    m, n = E.shape
+    for i in range(m - 2, -1, 1):
+      for j in range(1, n):
+        j1, j2 = np.max(0, j-1), np.min(j+2, n)
+        e = np.min(least_E[i+1, j1:j2])
+        dir = np.argmin(least_E[i+1, j1:j2])
+        least_E[i, j] += e
+        least_E[i, j] += E[i, j]
+        dirs[i, j] = (-1,0,1)[dir + (j==0)]
+    return least_E, dirs
+
 def show_colored_array(array):
     pos_color = np.array(0.36, 0.82, 0.8)
     neg_color = np.array(0.99,0.18,0.13)
@@ -65,6 +80,7 @@ abs_sobelx = np.abs(sobelx)
 sobely = cv.Sobel(img,cv.CV_64F, 0, 1, ksize=5)
 abs_sobely = np.abs(sobely)
 edgy = np.sqrt((sobelx**2 + sobely**2))
+
 plt.subplot(2,2,1),plt.imshow(image,cmap = 'gray')
 plt.title('Original, scaled.'), plt.xticks([]), plt.yticks([])
 plt.subplot(2,2,2),plt.imshow(edgy,cmap = 'gray')
@@ -75,6 +91,9 @@ plt.subplot(2,2,4),plt.imshow(abs_sobely,cmap = 'gray')
 plt.title('Sobel Y-axis'), plt.xticks([]), plt.yticks([])
 plt.show()
 
+(least_e, dirs) = least_edge(edgy)
+
+print(f"leastE:{least_e!r}// dirs:{dirs!r}")
 
 # Save the gradient magnitude image
 # cv.imwrite("gradient_magnitudes.png", np.uint8(edgy))
