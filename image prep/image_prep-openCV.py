@@ -36,19 +36,11 @@ if response.status_code == 200:
 if img is None:
     sys.exit("Could not read the image")
 
-
-# #trying different image to check least_E (early/ending) array values in terminal without having to learn how to write arrays to files :)
-# image_forced = requests.get('https://apod.nasa.gov/apod/image/2401/ThorsHelmet_Biswas_1436.jpg')
-# image_f = Image.open(BytesIO(image_response.content))
-# image_f.show()
-
 scale_factor = (550 / w)
 scaled = (550, int(h * scale_factor))
 
 resized = cv.resize(image, scaled)
 for_kernels = cv.resize(img,scaled)
-
-
 
 
 def least_edge(E):
