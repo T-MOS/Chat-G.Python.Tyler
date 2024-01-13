@@ -23,7 +23,7 @@ if response.status_code == 200:
     img_tag = soup.find('img')
     img_url = 'https://apod.nasa.gov/apod/' + img_tag['src']
     # Request the image
-    image_response = requests.get(img_url)
+    image_response = requests.get("https://apod.nasa.gov/apod/image/2401/ThorsHelmet_Biswas_1436.jpg")
     if image_response.status_code == 200:
         # image_buffer = BytesIO()
         image_array = np.frombuffer(image_response.content, np.uint8)
@@ -33,6 +33,15 @@ if response.status_code == 200:
         (h, w) = img.shape
         print(f"height is {h!r}, width is {w!r}")
 
+if img is None:
+    sys.exit("Could not read the image")
+
+
+# #trying different image to check least_E (early/ending) array values in terminal without having to learn how to write arrays to files :)
+# image_forced = requests.get('https://apod.nasa.gov/apod/image/2401/ThorsHelmet_Biswas_1436.jpg')
+# image_f = Image.open(BytesIO(image_response.content))
+# image_f.show()
+
 scale_factor = (550 / w)
 scaled = (550, int(h * scale_factor))
 
@@ -41,22 +50,23 @@ for_kernels = cv.resize(img,scaled)
 
 
 
-if img is None:
-    sys.exit("Could not read the image")
 
 def least_edge(E):
-    least_E = np.zeros(E.shape)
-    dirs = np.zeros(E.shape, dtype=int)
+    least_E = np.full_like(E, 0)
+    dirs = np.full_like(E, 0, dtype=int)
     least_E[-1, :] = E[-1, :]
     m, n = E.shape
-    for i in range(m - 2, -1, 1):
-      for j in range(1, n):
-        j1, j2 = np.max(0, j-1), np.min(j+2, n)
-        e = np.min(least_E[i+1, j1:j2])
-        dir = np.argmin(least_E[i+1, j1:j2])
-        least_E[i, j] += e
-        least_E[i, j] += E[i, j]
-        dirs[i, j] = (-1,0,1)[dir + (j==0)]
+    print(E[1963,1435])
+    for i in range(m - 2, -1, -1):
+        for j in range(1, n-1):
+            j1, j2 = np.max(0, j-1), np.min(j+1, n)
+            print(j, "j1:"+ j1,"j2",j2)
+            e = np.min(least_E[i+1, j1:j2])
+            # print(e)
+            dir = np.argmin(least_E[i+1, j1:j2])
+            least_E[i, j] += e
+            least_E[i, j] += E[i, j]
+            dirs[i, j] = (-1,0,1)[dir + (j==0)]
     return least_E, dirs
 
 def show_colored_array(array):
@@ -80,7 +90,8 @@ abs_sobelx = np.abs(sobelx)
 sobely = cv.Sobel(img,cv.CV_64F, 0, 1, ksize=5)
 abs_sobely = np.abs(sobely)
 edgy = np.sqrt((sobelx**2 + sobely**2))
-
+shapeA = edgy.shape
+print(f"tuple:rows/cols {shapeA!r}")
 plt.subplot(2,2,1),plt.imshow(image,cmap = 'gray')
 plt.title('Original, scaled.'), plt.xticks([]), plt.yticks([])
 plt.subplot(2,2,2),plt.imshow(edgy,cmap = 'gray')
@@ -91,9 +102,9 @@ plt.subplot(2,2,4),plt.imshow(abs_sobely,cmap = 'gray')
 plt.title('Sobel Y-axis'), plt.xticks([]), plt.yticks([])
 plt.show()
 
-(least_e, dirs) = least_edge(edgy)
-
-print(f"leastE:{least_e!r}// dirs:{dirs!r}")
+# least_e, dirs = least_edge(edgy)
+least_edge(edgy)
+# print(f"leastE:{least_e!r}// dirs:{dirs!r}")
 
 # Save the gradient magnitude image
 # cv.imwrite("gradient_magnitudes.png", np.uint8(edgy))
@@ -110,3 +121,4 @@ print(f"leastE:{least_e!r}// dirs:{dirs!r}")
 # cv.imshow("display image", resized)
 
 
+34913
