@@ -32,7 +32,9 @@ if response.status_code == 200:
         assert image is not None, "file  not found, 'os.path.exitsts()'?"
         (h, w) = img.shape
         print(f"height is {h!r}, width is {w!r}")
+        #end: img fetch
 
+#begin formatting
 if img is None:
     sys.exit("Could not read the image")
 
@@ -41,11 +43,13 @@ scaled = (550, int(h * scale_factor))
 
 resized = cv.resize(image, scaled)
 for_kernels = cv.resize(img,scaled)
-
-
+        #end: formatting
+#begin processing
 def least_edge(E):
-    least_E = np.full_like(E, 0)
-    dirs = np.full_like(E, 0, dtype=int)
+    least_E = np.full_like(E, 0) #array of shape: 'input'("E"); zero-filled.
+""" ^what dimensions should/do i expect? are they present in least_E^ """
+    dirs = np.full_like(E, 0, dtype=int) #"..."; addtl'y, value type:integer.
+""" ^determine necessity: why int...? what if...dtype=float? etc.^ """
     least_E[-1, :] = E[-1, :]
     m, n = E.shape
     print(E[1963,1435])
@@ -60,6 +64,8 @@ def least_edge(E):
             least_E[i, j] += E[i, j]
             dirs[i, j] = (-1,0,1)[dir + (j==0)]
     return least_E, dirs
+    #call
+least_edge(edgy)
 
 def show_colored_array(array):
     pos_color = np.array(0.36, 0.82, 0.8)
@@ -95,7 +101,7 @@ plt.title('Sobel Y-axis'), plt.xticks([]), plt.yticks([])
 plt.show()
 
 # least_e, dirs = least_edge(edgy)
-least_edge(edgy)
+#least_edge(edgy)
 # print(f"leastE:{least_e!r}// dirs:{dirs!r}")
 
 # Save the gradient magnitude image
