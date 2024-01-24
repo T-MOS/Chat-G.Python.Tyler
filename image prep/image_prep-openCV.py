@@ -48,10 +48,19 @@ for_kernels = cv.resize(img,scaled)
 def least_edge(E):
     least_E = np.full_like(E, 0) #array of shape: 'input'("E"); zero-filled.
 """ ^what dimensions should/do i expect? are they present in least_E^ """
-    dirs = np.full_like(E, 0, dtype=int) #"..."; addtl'y, value type:integer.
-""" ^determine necessity: why int...? what if...dtype=float? etc.^ """
-    least_E[-1, :] = E[-1, :]
-    m, n = E.shape
+        #Answer: The dimensions of least_E should be the same as E, which is a 2D array of energy values. You can check the dimensions of least_E by using the .shape attribute.
+
+    dirs = np.full_like(E, 0, dtype=int) #array of shape: 'input'("E"); value type:integer.
+    """ ^determine necessity: why int...? what if...dtype=float? etc.^ """
+    #Answer: The dirs array is used to store the direction of the least energy edge for each pixel. The direction can be one of four values: 0, 1, 2, or 3. Therefore, it is more efficient to use int as the data type, since it takes less memory than float. If you use float, you will have to convert it to int later when you use it as an index.
+
+    least_E[-1, :] = E[-1, :] #copy the last row of E to the last row of least_E
+    """ ^explain the purpose: why copy the last row of E? how does it affect the output? etc.^ """
+    #Answer: The purpose of copying the last row of E is to initialize the least_E array with the base case. The base case is that the least energy edge for the bottom row of pixels is just the energy value of each pixel. This will affect the output by providing the starting point for the dynamic programming algorithm that computes the least energy edge for the rest of the pixels.
+
+    m, n = E.shape #unpack the shape of E into two variables: m and n
+    """ ^identify the meaning: what do m and n represent? how are they used in the function? etc.^ """
+    #Answer: The m and n variables represent the number of rows and columns of E, respectively. They are used in the function to iterate over the pixels from bottom to top and left to right, and to access the elements of E, least_E, and dirs by using indexing.
     print(E[1963,1435])
     for i in range(m - 2, -1, -1):
         for j in range(1, n-1):
