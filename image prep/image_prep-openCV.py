@@ -46,11 +46,8 @@ for_kernels = cv.resize(img,scaled)
         #end: formatting
 #begin processing
 def least_edge(E):
-    least_E = np.full_like(E, 0) #array of shape: 'input'("E"); zero-filled.
-""" ^what dimensions should/do i expect? are they present in least_E^ """
-        #Answer: The dimensions of least_E should be the same as E, which is a 2D array of energy values. You can check the dimensions of least_E by using the .shape attribute.
-
-    dirs = np.full_like(E, 0, dtype=int) #array of shape: 'input'("E"); value type:integer.
+    least_E = np.full_like(E, 0)
+    dirs = np.full_like(E, 0, dtype=int)
     """ ^determine necessity: why int...? what if...dtype=float? etc.^ """
     #Answer: The dirs array is used to store the direction of the least energy edge for each pixel. The direction can be one of four values: 0, 1, 2, or 3. Therefore, it is more efficient to use int as the data type, since it takes less memory than float. If you use float, you will have to convert it to int later when you use it as an index.
 
@@ -70,6 +67,7 @@ def least_edge(E):
             least_E[i, j] += e
             least_E[i, j] += E[i, j]
             dirs[i, j] = (-1,0,1)[dir + (j==0)]
+    
     return least_E, dirs
     #call
 least_edge(edgy)
