@@ -65,9 +65,7 @@ def least_edge(E):
     for i in range(m - 2, -1, -1):
         for j in range(1, n-1):
             j1, j2 = max(0, j-1), min(j+1, n)
-            #print(j, "j1:", j1,"j2",j2)
             e = np.min(least_E[i+1, j1:j2])
-            # print(e)
             dir = np.argmin(least_E[i+1, j1:j2])
             least_E[i, j] += e
             least_E[i, j] += E[i, j]
