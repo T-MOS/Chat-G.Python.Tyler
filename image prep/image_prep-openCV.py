@@ -58,7 +58,6 @@ def least_edge(E):
     m, n = E.shape #unpack the shape of E into two variables: m and n
     """ ^identify the meaning: what do m and n represent? how are they used in the function? etc.^ """
     #Answer: The m and n variables represent the number of rows and columns of E, respectively. They are used in the function to iterate over the pixels from bottom to top and left to right, and to access the elements of E, least_E, and dirs by using indexing.
-    print(E.shape)
     for i in range(m - 2, -1, -1):
         for j in range(1, n-1):
             j1, j2 = max(0, j-1), min(j+1, n)
