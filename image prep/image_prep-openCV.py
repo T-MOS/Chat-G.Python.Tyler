@@ -48,8 +48,6 @@ for_kernels = cv.resize(img,scaled)
 def least_edge(E):
     least_E = np.full_like(E, 0)
     dirs = np.full_like(E, 0, dtype=int)
-    """ ^determine necessity: why int...? what if...dtype=float? etc.^ """
-    #Answer: The dirs array is used to store the direction of the least energy edge for each pixel. The direction can be one of four values: 0, 1, 2, or 3. Therefore, it is more efficient to use int as the data type, since it takes less memory than float. If you use float, you will have to convert it to int later when you use it as an index.
 
     least_E[-1, :] = E[-1, :] #copy the last row of E to the last row of least_E
     """ ^explain the purpose: why copy the last row of E? how does it affect the output? etc.^ """
