@@ -50,8 +50,8 @@ def least_edge(E):
     dirs = np.full_like(E, 0, dtype=int)
 
     least_E[-1, :] = E[-1, :] #copy the last row of E to the last row of least_E
-    """ ^explain the purpose: why copy the last row of E? how does it affect the output? etc.^ """
-    #Answer: The purpose of copying the last row of E is to initialize the least_E array with the base case. The base case is that the least energy edge for the bottom row of pixels is just the energy value of each pixel. This will affect the output by providing the starting point for the dynamic programming algorithm that computes the least energy edge for the rest of the pixels.
+    """ ^explain the purpose: why copy the last row of E?^ """
+    #Answer: The purpose of copying the last row of E is to initialize the least_E array with the base case. The base case is that the least energy edge for the bottom row of pixels is just the energy value of each pixel.
 
     m, n = E.shape #unpack the shape of E into two variables: m and n
     """ ^identify the meaning: what do m and n represent? how are they used in the function? etc.^ """
