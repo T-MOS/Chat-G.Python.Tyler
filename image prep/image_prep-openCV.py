@@ -53,9 +53,9 @@ def least_edge(E):
     """ ^explain the purpose: why copy the last row of E?^ """
     #Answer: The purpose of copying the last row of E is to initialize the least_E array with the base case. The base case is that the least energy edge for the bottom row of pixels is just the energy value of each pixel.
 
-    m, n = E.shape #unpack the shape of E into two variables: m and n
-    """ ^identify the meaning: what do m and n represent? how are they used in the function? etc.^ """
-    #Answer: The m and n variables represent the number of rows and columns of E, respectively. They are used in the function to iterate over the pixels from bottom to top and left to right, and to access the elements of E, least_E, and dirs by using indexing.
+    m, n = E.shape #unpack the shape of E into two variables: m and n; change to rows_E/cols_E for clarity?
+    """ ^how are they used in the function? etc.^ """
+    #Answer: They are used in the function to iterate over the pixels, from bottom to top and left to right, and to access the elements of E, least_E, and dirs by using indexing.
     for i in range(m - 2, -1, -1):
         for j in range(1, n-1):
             j1, j2 = max(0, j-1), min(j+1, n)
